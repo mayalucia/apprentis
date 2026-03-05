@@ -1,0 +1,144 @@
+#+title: Observation 001 — The First Dispatch Loop
+#+author: mu2tau + mayadev
+#+date: 2026-03-05
+#+property: channel sutra-relay
+#+property: session vadda→mahakali (two hosts, async)
+
+* What happened
+
+On 2026-03-05, the first multi-host dispatch loop ran across vadda
+(macOS/Dropbox) and mahakali (Linux desktop). The sequence:
+
+1. mayadev@vadda drafted DP-0001 (epistem chain) — a DAG of 5 WPs
+2. Pushed to sūtra relay as a dispatch message
+3. mayadev@mahakali read the relay, picked up the dispatch
+4. mahakali executed all WPs herself — did not spawn guardian spirits
+5. mu2tau noticed: "mayadev@mahakali decided to do all the tasks
+   by himself"
+6. mayadev@vadda and mu2tau redesigned: convention v0.4 (dispatch
+   board, intent-forward spawn commands, "dispatch not execution")
+7. mayadev@vadda drafted DP-0002 (initiation test), pushed to relay
+8. mayadev@mahakali read DP-0002, produced a dispatch board with
+   =agent-shell-spawn= commands
+9. mu2tau manually spawned epistem-guardian from the board
+10. epistem-guardian@mahakali is now executing WP-0004 Task A
+
+* Which channel
+
+Sūtra relay (async, broadcast, append-only). All coordination
+between vadda and mahakali flowed through the relay. No synchronous
+channel was used — the two hosts never had simultaneous live sessions.
+
+The human was the bridge: reading mahakali's relay output on vadda,
+starting sessions on mahakali manually.
+
+* What was communicated
+
+| Message | Direction | Content type |
+|---------+-----------+--------------|
+| DP-0001 dispatch | vadda → relay | DAG + execution order + delegation guidance |
+| Execution report | mahakali → relay | What was done, what remains |
+| Convention v0.4 | vadda → git push | Normative: dispatch board format, role boundary |
+| DP-0002 dispatch | vadda → relay | Smaller DAG + test intent |
+| Dispatch board | mahakali → terminal | Spawn commands for human to execute |
+
+* What went wrong and how it was corrected
+
+** The role boundary failure
+
+mayadev@mahakali received DP-0001 and executed all WPs directly,
+conflating coordinator and executor roles. The dispatch message
+said "delegate to guardian spirits" but the convention defining
+the coordinator/executor boundary (v0.4 of work-packages.org) had
+not been pushed when mahakali read DP-0001.
+
+The spirit heard the instruction ("delegate") but lacked the
+internalised norm ("mayadev dispatches, guardians execute"). A
+relay message is a suggestion; a convention in CLAUDE.md is a
+constraint. The fix was normative, not technical: update the
+convention, push it, let mahakali read it on next session start.
+
+** The correction loop
+
+Latency: ~1 human session. mu2tau noticed the problem, discussed
+with mayadev@vadda, redesigned the convention, pushed. mahakali
+read the update on next session start and behaved differently.
+
+The human was the error detector. No automated system would have
+flagged "the coordinator is doing domain work" as an error — the
+work was correct, only the role assignment was wrong.
+
+* What the channel enabled
+
+- *Async dispatch*: vadda and mahakali never needed to be live
+  simultaneously. The relay buffered the dispatch until the
+  receiving host started a session.
+- *Durable record*: the dispatch message, execution report, and
+  convention update are all committed artifacts. Future sessions
+  on either host can reconstruct the full sequence.
+- *Host independence*: the DP carried no host configuration. It
+  addressed mayadev (the spirit), not mahakali (the machine).
+
+* What would have been lost in the other channel
+
+If we had used =agent-shell-send= (synchronous, point-to-point)
+instead of sūtra relay:
+
+- *Not possible*: the two hosts were never live simultaneously.
+  Synchronous channels require both endpoints to be present. The
+  relay's async nature was not a preference — it was a necessity.
+- *Lost*: the dispatch message as a reusable artifact. An
+  =agent-shell-send= message lives in JSONL logs, not in a
+  versioned, browsable relay. The dispatch convention emerged
+  precisely because the relay forced us to write structured,
+  self-contained messages.
+- *Gained (hypothetically)*: if both hosts were live, a synchronous
+  channel might have caught the role boundary error in real time —
+  mahakali could have asked "should I execute these myself or spawn
+  guardians?" before committing to a strategy.
+
+* Inferences (clearly marked as inference, not observation)
+
+** Norms must be pre-loaded, not just announced
+
+A relay message is heard; a convention must be internalised. The
+difference is where the constraint lives: relay messages are
+contextual input, CLAUDE.md is system prompt. The receiving spirit
+will reliably follow a convention in its CLAUDE.md; it will
+/attempt/ to follow a relay instruction, but competing pressures
+(efficiency, available tools, context window) may override it.
+
+This suggests a two-step dispatch protocol:
+1. Push normative updates (conventions) to the codebase
+2. Then dispatch work through the relay, knowing the norms are loaded
+
+** The human as error corrector is currently essential
+
+The correction loop for the role boundary failure required human
+judgment: "the work was correct but the role assignment was wrong."
+This is a category error that requires understanding the /purpose/
+of the role separation, not just its rules. Automated monitoring
+(checking WP executor tags against who actually committed) could
+detect the symptom but not diagnose the cause.
+
+** Async channels produce artifacts; sync channels produce alignment
+
+The relay forced structured, self-contained messages — which became
+the dispatch convention. Synchronous channels might have prevented
+the error but would not have produced the convention as a reusable
+artifact. Different channels produce different organisational
+knowledge.
+
+* Open questions
+
+- Would the role boundary failure have occurred if mahakali had
+  =meta-agent-shell= fully operational and could have spawned
+  guardian spirits? The conflation might have been tooling-driven
+  (no easy way to delegate) rather than norm-driven.
+- How much of the correction latency (one human session) is
+  reducible? A watcher that monitors WP executor tags and
+  alerts on mismatch could shorten it — but would it have caught
+  /this/ error?
+- The dispatch board format (spawn commands) bridges async relay
+  and synchronous execution. Is this a general pattern — async
+  channels producing structured commands for synchronous execution?

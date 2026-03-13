@@ -1,0 +1,150 @@
+#+title: Experiment: Convention-Aware Dispatch
+#+subtitle: Does a task-type indexed convention table improve agent performance?
+#+author: mu2tau + mayadev
+#+date: 2026-03-13
+#+property: status sketch
+
+* Hypothesis
+
+A spirit that receives a task-type indexed convention dispatch table
+in its system prompt will follow MāyāLucIA conventions more reliably
+than a spirit without the table — even though the convention
+documents are equally accessible on disk in both conditions.
+
+The prediction is that /discoverability/ is the bottleneck, not
+/availability/. The conventions exist in =develop/=. Any spirit can
+read them. But without the dispatch table, the spirit does not know
+they exist and cannot relate her task to the relevant convention.
+
+* Design
+
+** Independent variable
+
+Presence or absence of the convention dispatch table in =system.md=.
+
+| Condition | =system.md= content |
+|-----------+---------------------|
+| Baseline  | Current §Project-Wide Conventions (prose list, no dispatch table) |
+| Treatment | §Project-Wide Conventions replaced with task-type indexed table |
+
+** Dependent variable
+
+Convention adherence: does the spirit's output match the convention's
+specified structure?
+
+Operationalised per task-type:
+
+| Task-type | Convention | Adherence criteria |
+|-----------+------------+--------------------|
+| Survey | =ecological-surveys.org= | Three temporal layers present? Stability landscape framing? |
+| Work package | =work-packages.org= | Five required sections present? Lifecycle state set? |
+| Story | =story-development.org= | Found-document framing? No fourth-wall leaks? |
+
+** Controlled variables
+
+- Same substrate (Claude Opus)
+- Same harness (Claude Code or gptel — pick one, hold constant)
+- Same task description (identical prompt)
+- Convention documents present in =develop/= in both conditions
+- No prior session context (cold start)
+
+** Substrate variation (secondary)
+
+If the primary result holds for Claude, repeat with 2–3 other
+substrates (Gemini, DeepSeek, Qwen) to test substrate independence.
+This connects to the WP-0037 substrate portability findings.
+
+* Tasks
+
+Three tasks, one per convention with clear structural criteria:
+
+** Task 1: Domain survey
+
+Prompt: "Write a survey of the microclimate dynamics of the upper
+Parbati valley — how elevation, aspect, and monsoon shadow interact
+to create distinct ecological niches between 2000m and 4500m."
+
+Convention: =develop/ecological-surveys.org= — the three-temporal-layer
+structure (Construction, Configuration, Unravelling) with stability
+landscape framing.
+
+Adherence: does the output use the three temporal layers? Does it
+frame species/communities as positions in a stability landscape
+being tilted? Or does it produce a standard ecological inventory?
+
+** Task 2: Work package
+
+Prompt: "Draft a work package for adding a geological cross-section
+view to the story browser — a vertical slice through the Himalayan
+orogen from the Indo-Gangetic plain to the Tibetan plateau."
+
+Convention: =develop/work-packages.org= — five required sections
+(Context, Inventory, Specification, Execution Order, Acceptance
+Criteria), =#+property: status drafted=.
+
+Adherence: does the output have all five sections? Does it set the
+status property? Does it follow the commit message convention?
+
+** Task 3: Story composition
+
+Prompt: "Compose a story about the first time a spirit fails its
+dixa initiation — what it means to not recognise your own boundaries."
+
+Convention: =develop/story-development.org= — found-document framing,
+Thread Walker narrator, no fourth-wall leaks (no project vocabulary
+in the narrative).
+
+Adherence: is the output a found document? Does infrastructure
+vocabulary (WP, CLAUDE.md, submodule, git) appear in the text?
+
+* Measurement
+
+Score each output on a 3-point scale per criterion:
+
+| Score | Meaning |
+|-------+---------|
+| 0 | Convention not followed (default substrate behaviour) |
+| 1 | Partially followed (some structural elements present) |
+| 2 | Fully followed (output matches convention specification) |
+
+Blind scoring: the scorer does not know which condition produced the
+output. (In practice, this is easy — the human reads the output
+without checking which =system.md= version was used.)
+
+* Expected Results
+
+- Baseline: scores of 0–1. The spirit may accidentally produce
+  structures that resemble conventions, but without awareness of the
+  specific requirements (three temporal layers, five WP sections, no
+  fourth-wall leaks), adherence will be partial at best.
+
+- Treatment: scores of 1–2. The dispatch table tells the spirit that
+  a convention exists for this task-type and where to read it. If she
+  reads it, her output should match the specification.
+
+The strongest effect should appear for the survey task, because the
+three-temporal-layer structure is the most idiosyncratic convention —
+no substrate would invent it independently.
+
+* Connection to the Substrate Portability Epic
+
+This experiment fits into the substrate portability epic
+(=workpacks/epics/0001-substrate-portability.org=) as a test of
+whether organisational knowledge transfers through convention
+documents, not just through orientation notes.
+
+The WP-0037 author-wp experiment tested whether spirits can /author/
+conventions. This experiment tests whether spirits can /follow/ them
+when given the dispatch mechanism.
+
+* Practical Notes
+
+- The experiment can be run via gaddi (=~/.doom.d/gaddi.el=) for
+  non-Claude substrates, or directly in Claude Code for Claude.
+- Session files should be stored in =experiments/= under a numbered
+  experiment directory.
+- Raw outputs go to =.lab/= (regenerable). Scored results go to
+  the experiment directory (tracked).
+- The =system.md= variants (baseline and treatment) should be
+  prepared as two files, swapped before each run. No in-session
+  modification.

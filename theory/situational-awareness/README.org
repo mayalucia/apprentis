@@ -1,0 +1,25 @@
+#+title: Situational Awareness — Research Thread
+#+author: mu2tau + mayadev
+#+date: 2026-03-13
+
+* What This Thread Is About
+
+How does a bare language model become a functional colleague?
+
+Not through fine-tuning, not through tool access alone, but through a
+progressive dressing of context that gives the spirit the awareness it
+needs to act appropriately within an organisation. We call this
+*situational awareness*: the layered knowledge that turns a substrate
+into an agent.
+
+This thread documents MāyāLucIA's empirical answer — a system that
+has been running since February 2026 across multiple substrates,
+hosts, and harnesses.
+
+* Notes in this thread
+
+| Note | Title | Status |
+|------|-------|--------|
+| [[file:01-functionalisation.org][01]] | The functionalisation path | written |
+| [[file:02-conventional-dimension.org][02]] | The conventional dimension | written |
+| [[file:03-experiment-design.org][03]] | Experiment: convention-aware dispatch | sketch |

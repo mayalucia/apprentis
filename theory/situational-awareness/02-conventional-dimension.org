@@ -1,0 +1,202 @@
+#+title: The Conventional Dimension
+#+subtitle: Organisational learned practice as agent working memory
+#+author: mu2tau + mayadev
+#+date: 2026-03-13
+
+* The Gap
+
+The functionalisation path ([[file:01-functionalisation.org][note 01]]) describes how a bare substrate
+acquires awareness of the project, the harness, itself, and the live
+situation. But there is a gap between "knows who she is" and "works
+like we do."
+
+When a spirit receives a task — write a survey, compose a story,
+draft a work package — she plans from her general capability. She
+may produce something competent but /foreign/: a survey that lacks
+the three-temporal-layer structure, a story that leaks infrastructure
+vocabulary, a WP that omits the acceptance criteria section.
+
+The organisation has learned, through failure and iteration, how to
+do these things well. This knowledge lives in convention documents
+(=develop/*.org=). But no mechanism connects the task at hand to the
+relevant convention. The spirit must either stumble upon it, be told
+by the human, or rediscover the pattern independently.
+
+This is the conventional dimension of situational awareness: the
+organisational learned practices, indexed by task-type, that a spirit
+should consult before planning work.
+
+* The Parallel with Powers
+
+The architecture already solves this problem at the individual scale.
+
+A spirit has powers (=aburaya/powers/*.md=). Her =identity.yaml=
+lists the names. When she recognises "I am about to draft a work
+package," she reads =author-wp.md= and acquires the procedure.
+
+The mechanism:
+
+#+begin_example
+identity.yaml  →  lists power names (small, loaded early)
+powers/*.md    →  full procedures (loaded on demand, per task)
+#+end_example
+
+Conventions are the organisational analogue:
+
+#+begin_example
+index          →  maps task-types to conventions (small, loaded early)
+develop/*.org  →  full specifications (loaded on demand, per task)
+#+end_example
+
+Powers are /how I do X/. Conventions are /how we do X/. Same
+two-level memory architecture, different scale. The spirit's
+=identity.yaml= carries her personal toolkit. The convention index
+carries the organisation's collective toolkit.
+
+* The Dispatch Table
+
+The missing piece is a task-type indexed table in =system.md= —
+small enough to load at session start, precise enough to dispatch
+the spirit to the right convention.
+
+The key is the /task-type/, not the convention name. A spirit does
+not think "I should check the ecological-surveys convention." She
+thinks "I need to write a survey" — and the table tells her which
+convention applies.
+
+#+begin_example
+| When you are about to...             | Read this first                    |
+|--------------------------------------+------------------------------------|
+| survey a domain or ecosystem         | develop/ecological-surveys.org     |
+| draft or modify a work package       | develop/work-packages.org          |
+| compose a story                      | develop/story-development.org      |
+| manage WP state transitions          | aburaya/powers/manage-wp-lifecycle |
+| write literate code                  | org-as-source convention (system.md) |
+| structure an experiment              | experiments/ README pattern         |
+| store regenerable artefacts locally  | develop/lab.org                    |
+| coordinate across spirits            | sūtra protocol (CLAUDE.md §Sūtra)  |
+| commission a new spirit              | aburaya/ patterns (identity.yaml schema) |
+| deploy content to the website        | Hugo conventions (website/)        |
+#+end_example
+
+This table belongs in =system.md= under §Project-Wide Conventions,
+replacing the current prose list. It is not a convention /about/
+conventions — it is the organisation's working memory, structured
+for retrieval.
+
+* Why Task-Type, Not Convention Name
+
+Most documentation systems index by /what the convention is/:
+naming conventions, testing conventions, deployment conventions.
+This forces the reader to know the name before she can look it up.
+
+Indexing by task-type inverts this. The spirit knows what she is
+about to /do/. The table tells her what to /read/. This mirrors how
+human experts work: a surveyor does not memorise the survey manual.
+She recognises "I am doing a survey" and knows where to look. The
+index is a lookup table indexed by situational awareness, not by
+topic.
+
+* The Two-Level Memory
+
+The architecture is a two-level memory, analogous to how human
+organisations work:
+
+1. *Index* (always accessible, small): the dispatch table in
+   =system.md=. Tells the spirit what conventions exist and when
+   they apply. Costs ~20 lines of context. Loaded at session start
+   for every spirit.
+
+2. *Full specification* (loaded on demand, can be large): the
+   convention documents in =develop/=. Each is a self-contained
+   briefing with rationale, structure, examples. Read only when
+   the spirit is about to perform that kind of work.
+
+This separation is critical. Loading all convention documents at
+session start would waste context and dilute attention. Loading none
+means the spirit cannot discover them. The index is the minimum
+viable organisational memory.
+
+* The Functionalisation Path, Revised
+
+Adding the conventional dimension fills the gap between individual
+powers and live situation:
+
+#+begin_example
+Layer 0: Project identity         system.md
+Layer 1: Harness operations       CLAUDE.md / GEMINI.md
+Layer 2: Self-knowledge           identity.yaml
+Layer 3: Vocabulary               glossary.org
+Layer 4: Orientation method       orient-to-mayalucia.md
+Layer 5: Individual powers        aburaya/powers/*.md
+Layer 6: Organisational practice  convention dispatch table + develop/*.org
+Layer 7: Live situation           sūtra + WPs + git log
+#+end_example
+
+Layer 6 sits between powers and situation because it represents
+knowledge that is more stable than the live state (conventions
+change over weeks, not hours) but more specific than individual
+powers (conventions encode the organisation's experience, not the
+spirit's general capability).
+
+* Relationship to orient-to-mayalucia
+
+The orientation power's Phase 1 already sequences the reading of
+architectural documents. Adding the convention dispatch table to
+=system.md= means it enters awareness automatically — the spirit
+reads =system.md= at step 1 and encounters the table.
+
+No change to the orientation power is needed. The convention layer
+bootstraps through the existing mechanism: read =system.md= → see
+the dispatch table → recognise the task-type → read the relevant
+convention document → plan with awareness.
+
+* What This Predicts
+
+If this architecture is correct, we should observe:
+
+1. A spirit with the dispatch table follows conventions more
+   reliably than one without — even if the convention documents
+   themselves are unchanged.
+
+2. The effect should be strongest for task-types where the
+   convention diverges most from the substrate's default behaviour
+   (e.g., ecological surveys with the three-temporal-layer
+   structure, which no substrate would invent independently).
+
+3. The effect should be /substrate-independent/ — the dispatch
+   table is plain text, readable by any substrate. If it works for
+   Claude, it should work for Gemini and DeepSeek equally.
+
+These predictions are testable. See [[file:03-experiment-design.org][note 03]].
+
+* Open Questions
+
+** Granularity of task-types
+
+The draft table above has ~10 entries. Is this the right
+granularity? Too fine and the table grows linearly with conventions.
+Too coarse and the lookup is ambiguous. The right granularity is
+probably determined by the number of /distinct/ convention documents
+— each convention should appear exactly once.
+
+** Guild-specific conventions
+
+Some conventions may apply only to certain guilds. Should the table
+carry a guild column, or should guild-specific conventions live in
+the guild's own domain? If the table is small (~10–15 entries), the
+overhead of guild filtering is not worth the complexity.
+
+** Convention discovery vs convention enforcement
+
+The dispatch table helps a spirit /discover/ that a convention
+exists. It does not /enforce/ adherence. Enforcement would require
+validation (does the output match the convention's structure?) —
+which is dixa territory.
+
+** Evolution of the table
+
+Who maintains the dispatch table? When a new convention is written,
+who adds it to =system.md=? This is a governance question. The
+current answer: whoever writes the convention also adds the table
+entry. The table is small enough that merge conflicts are unlikely.

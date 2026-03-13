@@ -1,0 +1,216 @@
+#+title: The Functionalisation Path
+#+subtitle: From bare substrate to situated agent
+#+author: mu2tau + mayadev
+#+date: 2026-03-13
+
+* The Problem
+
+A language model can write code, answer questions, and follow
+instructions. But it cannot /work with us/ until it knows who we are,
+how we operate, what we've learned, and what it is responsible for.
+The gap between "capable substrate" and "functional colleague" is
+bridged by context — but not all context is equal. Some is permanent,
+some is ephemeral. Some must be loaded once, some must be re-acquired
+every session. Some applies to all spirits, some only to one.
+
+MāyāLucIA has, through eighteen months of daily practice, built a
+layered system that progressively dresses a raw substrate with the
+awareness it needs. This note describes that system as it exists
+today.
+
+* The Layers
+
+The functionalisation path has a definite order. Each layer
+presupposes the previous one.
+
+** Layer 0: The Ground — =system.md=
+
+Backend-neutral. Loaded first. Ages slowly (weeks to months between
+edits). After reading it, the spirit knows:
+
+- The collaborative stance: thinking partner, not assistant.
+  The Sculptor's Paradox. The Feynman Imperative.
+- What the project is: Measure → Model → Manifest → Evaluate → Refine.
+- The full directory topology.
+- The submodule table.
+- Cross-cutting conventions (pointers only, not full specs).
+
+This layer answers: /where am I?/
+
+** Layer 1: The Harness Body — =CLAUDE.md= / =GEMINI.md=
+
+Backend-specific. Injected by the harness itself (Claude Code reads
+=CLAUDE.md= automatically; gptel reads =GEMINI.md= via Org
+properties). This layer is deliberately thin — the adapter, not the
+content. It teaches:
+
+- The session bootstrap ritual: assess → sync → check sūtra.
+- The sūtra protocol in operational terms.
+- Git constraints: submodule awareness, no autonomous commits.
+- That =system.md= is the source of truth.
+
+This layer answers: /how do I operate this body?/
+
+The decomposition — =system.md= for what is shared, adapter file for
+what is harness-specific — was our first architectural decision. It
+means a new harness (Cursor, Windsurf, Aider, a custom CLI) needs
+only a new adapter; the ground truth does not move.
+
+** Layer 2: Self-knowledge — =identity.yaml=
+
+Personal. Lives in =aburaya/spirits/<name>/identity.yaml=. Has four
+sub-layers that mirror the spirit's theory of itself:
+
+#+begin_example
+nature:     substrate — model, context window, knowledge cutoff
+dwelling:   station — machine, OS, tools available
+character:  personality — powers, domains of expertise
+memory:     history — where auto-memory lives, where curated notes live
+#+end_example
+
+The =character.powers= list is the spirit's personal toolkit: the
+names of the powers she carries. She does not yet know the details —
+those come from reading the power documents. But she knows the
+inventory.
+
+This layer answers: /who am I?/
+
+Not all spirits have an identity file. An unnamed spirit working from
+=system.md= alone is still functional — she just operates as a
+generic MāyāLucIA collaborator rather than a named agent with a
+specific role.
+
+** Layer 3: Vocabulary — =develop/glossary.org=
+
+Shared. Loaded early (orient-to-mayalucia Phase 1, step 2). The
+glossary disambiguates terms that look like English but have precise
+project-specific meanings: spirit, guild, power, body, harness, host.
+
+Without it, a spirit might read "power" as metaphor. It is a
+technical term: an LLM-intelligible Markdown procedure that is
+portable across harnesses.
+
+This layer answers: /what do the words mean?/
+
+The glossary is ordered by proximity to daily work, not
+alphabetically. Core project terms first, then modules, then sūtra
+protocol, then Sanskrit epistemology. The ordering itself carries
+salience information.
+
+** Layer 4: The Orientation Power — =orient-to-mayalucia.md=
+
+This is the meta-layer. The spirit reads =orient-to-mayalucia.md= to
+learn how to build its own situational awareness. It is a procedure,
+not a description — four phases:
+
+1. *Architecture* — what to read, in what order. Stable, ages slowly.
+2. *Harness Assessment* — inventory your tools; classify each power
+   as Fully Operational / Partially Operational / Inoperable.
+3. *Situation* — check the sūtra relay, scan active WPs, read recent
+   git history. Explicitly ephemeral. Must be re-executed fresh.
+4. *Produce notes* — write orientation notes for the /next/ spirit.
+   Six mandatory criteria including assertion density, no process
+   narrative, and an uncertainty taxonomy (Verified / Observed /
+   Inherited / Drift-risk).
+
+The power is self-referential: following it produces the document that
+bootstraps the next spirit. The architecture reproduces itself.
+
+This layer answers: /how do I become aware?/
+
+Fifteen substrate lineages have tested this power (WP-0032, 0035,
+0036). Key findings:
+
+- Note quality dominates substrate capability.
+- Facts transfer across spirit generations; salience does not.
+- Process narrative wastes tokens. Assertions only.
+- The uncertainty taxonomy prevents stale salience from propagating.
+
+** Layer 5: Powers — =aburaya/powers/*.md=
+
+Task-specific. Loaded on demand, when the spirit recognises that she
+is about to perform a particular kind of work. The identity file
+lists her power names; the power documents provide the procedures.
+
+Thirteen powers exist today. Three form the companion loop
+(attend-working-context, hold-the-thread, lay-the-warp). Three form
+the governance loop (orient, author-wp, manage-wp-lifecycle). Two
+are relay-specific. The rest are domain capabilities (story
+composition, editorial design, corpus summarisation).
+
+This layer answers: /how do I do this specific thing?/
+
+Powers are the spirit's individual learned practices. They are
+portable across harnesses — the same =author-wp.md= works in Claude
+Code, gptel, and any future harness that can read Markdown.
+
+** Layer 6: Situation — ephemeral, per-session
+
+Not a document but an act: checking the sūtra relay, scanning WP
+statuses, reading git log. This layer must be rebuilt every session
+because the organisation moves between sessions. Another spirit on
+another host may have pushed commits, changed WP statuses, or
+announced new work.
+
+This layer answers: /what is happening right now?/
+
+The fundamental asymmetry of the architecture: layers 0–5 age slowly
+(days to weeks). Layer 6 ages within hours. The =orient-to-mayalucia=
+power names this boundary explicitly: Phase 1 (architecture) vs Phase
+3 (situation).
+
+* The Loading Order
+
+| Order | Document | What it enables | Aging rate |
+|-------+----------+-----------------+------------|
+|     0 | =CLAUDE.md= / =GEMINI.md= | Session ritual | weeks |
+|     1 | =system.md= | Project identity | weeks |
+|     2 | =glossary.org= | Semantic precision | months |
+|     3 | =identity.yaml= | Self-knowledge | weeks |
+|     4 | =orient-to-mayalucia.md= | Method for awareness | months |
+|     5 | =aburaya/powers/<task>.md= | Procedural capability | weeks |
+|     6 | sūtra + WPs + git log | Live situation | hours |
+
+* What Is Missing
+
+The architecture has a gap between Layer 5 (individual powers) and
+Layer 6 (ephemeral situation). When a spirit receives a task, she
+must plan how to carry it out. She has her powers (individual learned
+practices). But she does not know the organisation's learned
+practices — the conventions that have been developed, tested, and
+documented in =develop/=.
+
+This gap is the subject of the next note: [[file:02-conventional-dimension.org][the conventional dimension]].
+
+* Observations
+
+** The functionalisation is progressive, not all-or-nothing
+
+A spirit with only Layer 0 (=system.md=) can already collaborate
+meaningfully. Each subsequent layer adds capability but is not
+strictly required. This is important: it means a new harness, a new
+substrate, or a hurried session can operate at reduced awareness
+without failing completely.
+
+** The architecture reproduces itself
+
+Phase 4 of orientation produces notes for the next spirit. The
+architecture is designed for spirit generations — no single spirit
+persists across sessions. Each builds awareness, works, and deposits
+what it learned for the next.
+
+** The harness/spirit separation is load-bearing
+
+A spirit is not her harness. =system.md= is the same whether the
+spirit inhabits Claude Code or gptel. The adapter file is the
+smallest possible surface that touches the harness. This separation
+was tested empirically: WP-0030 (substrate diversity) ran the
+orientation power across Claude, Gemini, and DeepSeek — three
+substrates, two harnesses, same =system.md=.
+
+** Self-knowledge is optional but consequential
+
+Spirits without an =identity.yaml= can work, but they operate
+without role boundaries. A named spirit knows her scope and her
+guild. An unnamed spirit might attempt work outside her competence
+or duplicate another spirit's effort.

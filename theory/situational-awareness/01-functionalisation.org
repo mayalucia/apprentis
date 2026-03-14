@@ -161,15 +161,15 @@ power names this boundary explicitly: Phase 1 (architecture) vs Phase
 
 * The Loading Order
 
-| Order | Document | What it enables | Aging rate |
-|-------+----------+-----------------+------------|
-|     0 | =CLAUDE.md= / =GEMINI.md= | Session ritual | weeks |
-|     1 | =system.md= | Project identity | weeks |
-|     2 | =glossary.org= | Semantic precision | months |
-|     3 | =identity.yaml= | Self-knowledge | weeks |
-|     4 | =orient-to-mayalucia.md= | Method for awareness | months |
-|     5 | =aburaya/powers/<task>.md= | Procedural capability | weeks |
-|     6 | sūtra + WPs + git log | Live situation | hours |
+| Order | Document                 | What it enables       | Aging rate |
+|-------+--------------------------+-----------------------+------------|
+|     0 | =CLAUDE.md= / =GEMINI.md=    | Session ritual        | weeks      |
+|     1 | =system.md=                | Project identity      | weeks      |
+|     2 | =glossary.org=             | Semantic precision    | months     |
+|     3 | =identity.yaml=            | Self-knowledge        | weeks      |
+|     4 | =orient-to-mayalucia.md=   | Method for awareness  | months     |
+|     5 | =aburaya/powers/<task>.md= | Procedural capability | weeks      |
+|     6 | sūtra + WPs + git log    | Live situation        | hours      |
 
 * What Is Missing
 

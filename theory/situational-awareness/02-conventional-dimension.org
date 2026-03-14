@@ -64,20 +64,18 @@ not think "I should check the ecological-surveys convention." She
 thinks "I need to write a survey" — and the table tells her which
 convention applies.
 
-#+begin_example
-| When you are about to...             | Read this first                    |
-|--------------------------------------+------------------------------------|
-| survey a domain or ecosystem         | develop/ecological-surveys.org     |
-| draft or modify a work package       | develop/work-packages.org          |
-| compose a story                      | develop/story-development.org      |
-| manage WP state transitions          | aburaya/powers/manage-wp-lifecycle |
-| write literate code                  | org-as-source convention (system.md) |
-| structure an experiment              | experiments/ README pattern         |
-| store regenerable artefacts locally  | develop/lab.org                    |
-| coordinate across spirits            | sūtra protocol (CLAUDE.md §Sūtra)  |
-| commission a new spirit              | aburaya/ patterns (identity.yaml schema) |
-| deploy content to the website        | Hugo conventions (website/)        |
-#+end_example
+| When you are about to...            | Read this first                          |
+|-------------------------------------+------------------------------------------|
+| survey a domain or ecosystem        | develop/ecological-surveys.org           |
+| draft or modify a work package      | develop/work-packages.org                |
+| compose a story                     | develop/story-development.org            |
+| manage WP state transitions         | aburaya/powers/manage-wp-lifecycle       |
+| write literate code                 | org-as-source convention (system.md)     |
+| structure an experiment             | experiments/ README pattern              |
+| store regenerable artefacts locally | develop/lab.org                          |
+| coordinate across spirits           | sūtra protocol (CLAUDE.md §Sūtra)        |
+| commission a new spirit             | aburaya/ patterns (identity.yaml schema) |
+| deploy content to the website       | Hugo conventions (website/)              |
 
 This table belongs in =system.md= under §Project-Wide Conventions,
 replacing the current prose list. It is not a convention /about/
